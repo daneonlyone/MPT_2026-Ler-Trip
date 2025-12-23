@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthdaypass — Rayner's Level Up</title>
+    <title>Ler Trip</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -89,24 +89,17 @@
         .fade-in { animation: fadeIn 0.5s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         
-        /* Timeline styling for itinerary */
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -21px;
-            top: 8px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--sp-red);
-            border: 2px solid white;
-            z-index: 1;
-        }
-
         /* Nav Active State */
         .nav-item.active {
             color: var(--sp-red);
             border-bottom: 2px solid var(--sp-red);
+        }
+
+        /* Day Tab Active State */
+        .day-tab.active {
+            background-color: var(--sp-red);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2);
         }
     </style>
 </head>
@@ -143,7 +136,7 @@
             <div id="user-display" class="hidden-stage flex items-center gap-3">
                 <div class="text-right">
                     <p class="text-xs font-bold text-slate-800">RAYNER LER</p>
-                    <span class="text-[10px] bg-pink-50 text-pink-600 px-2 py-0.5 rounded font-bold uppercase">Level 2026</span>
+                    <span class="text-[10px] bg-pink-50 text-pink-600 px-2 py-0.5 rounded font-bold uppercase">Level 31</span>
                 </div>
                 <div class="w-10 h-10 bg-gradient-to-tr from-pink-100 to-yellow-100 rounded-full border-2 border-white shadow-sm flex items-center justify-center overflow-hidden">
                     <span class="text-xl">😎</span>
@@ -198,7 +191,7 @@
             <!-- Header Section -->
             <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
                 <div>
-                    <h1 class="text-4xl font-black text-slate-900 mb-2">Happy Birthday, Rayner!</h1>
+                    <h1 class="text-4xl font-black text-slate-900 mb-2">Happy Birthday, Rayner Ler a.k.a 樂哥!</h1>
                     <p class="text-slate-500 font-medium italic">"Your 2026 digital asset portfolio is now unlocked."</p>
                     <!-- More Confetti Button -->
                     <button onclick="triggerConfetti()" class="mt-6 px-6 py-3 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-pink-100 hover:scale-105 transition-transform">
@@ -242,8 +235,8 @@
                             <div class="flex-1 space-y-6 w-full">
                                 <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-4">
                                     <div>
-                                        <h3 class="text-4xl font-black text-slate-900 leading-tight">TOKYO ADVENTURE</h3>
-                                        <p class="text-xs text-[#ff4757] font-black uppercase tracking-[0.2em] mt-1">Special Deployment Pass</p>
+                                        <h3 class="text-4xl font-black text-slate-900 leading-tight">LER TRIP ADVENTURE</h3>
+                                        <p class="text-xs text-[#ff4757] font-black uppercase tracking-[0.2em] mt-1">Mysterious Travel Pass</p>
                                     </div>
                                     <div class="bg-green-50 text-green-600 px-4 py-2 rounded-xl text-[10px] font-black tracking-widest border border-green-100">
                                         READY FOR TAKEOFF
@@ -256,7 +249,7 @@
                                     </div>
                                     <div>
                                         <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Destination</p>
-                                        <p class="text-lg font-bold text-slate-800">Tokyo (TYO)</p>
+                                        <p class="text-lg font-bold text-slate-800">China (TBA)</p>
                                     </div>
                                 </div>
                             </div>
@@ -294,66 +287,141 @@
 
         <!-- ITINERARY VIEW -->
         <main id="view-itinerary" class="max-w-5xl mx-auto mt-10 px-6 pb-20 hidden-stage fade-in">
-            <div class="mb-12">
-                <h2 class="text-xs font-black text-red-500 uppercase tracking-[0.4em] mb-2">Mission Briefing</h2>
-                <h1 class="text-4xl font-black text-slate-900">Tokyo Itinerary 2026</h1>
-                <p class="text-sm text-slate-400 font-medium mt-2">Journey Duration: May 14 — May 17, 2026</p>
+            <div class="mb-8">
+                <div class="flex justify-between items-end mb-4">
+                    <div>
+                        <h2 class="text-xs font-black text-red-500 uppercase tracking-[0.4em] mb-2">Mission Briefing</h2>
+                        <h1 class="text-4xl font-black text-slate-900">China Itinerary 2026</h1>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">Duration: May 14 — May 17</p>
+                        <p class="text-[10px] text-slate-300 uppercase tracking-widest mt-1">Status: Active Deployment</p>
+                    </div>
+                </div>
+                
+                <!-- Day Sub-Navigation -->
+                <div class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+                    <button onclick="switchDay(1)" id="day-tab-1" class="day-tab active px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap">Day 1</button>
+                    <button onclick="switchDay(2)" id="day-tab-2" class="day-tab px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap bg-white text-slate-400">Day 2</button>
+                    <button onclick="switchDay(3)" id="day-tab-3" class="day-tab px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap bg-white text-slate-400">Day 3</button>
+                    <button onclick="switchDay(4)" id="day-tab-4" class="day-tab px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap bg-white text-slate-400">Day 4</button>
+                </div>
+                <div class="h-1 w-full bg-pink-50 rounded-full"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Timeline -->
+                <!-- Timeline Content -->
                 <div class="lg:col-span-8">
-                    <div class="sp-card p-10 bg-white">
-                        <div class="relative ml-6 border-l-2 border-pink-50 space-y-12 pb-4">
-                            <!-- Day 1 -->
-                            <div class="timeline-item relative pl-8">
-                                <span class="text-[10px] font-black text-red-500 uppercase tracking-widest bg-red-50 px-3 py-1 rounded-full">Day 1: Thursday, May 14</span>
-                                <h4 class="text-xl font-bold text-slate-800 mt-3">The Arrival & Shinjuku Celebration</h4>
-                                <p class="text-sm text-slate-500 mt-2 leading-relaxed italic">"Touch down at NRT, board the Skyliner. Initial base camp established in Shinjuku. Evening birthday dinner at a hidden Omakase spot."</p>
+                    <div id="day-content-1" class="sp-card p-10 bg-white fade-in">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-[10px] font-black text-red-500 uppercase tracking-widest bg-red-50 px-3 py-1 rounded-full">Arrival • May 14 (Thu)</span>
+                        </div>
+                        <h4 class="text-2xl font-black text-slate-800">SIN to NRT & Shinjuku Check-in</h4>
+                        <div class="mt-6 space-y-6">
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-red-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Morning Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Touch down at Narita International Airport. Clear customs and board the Skyliner Express to central Tokyo.</p>
                             </div>
-                            <!-- Day 2 -->
-                            <div class="timeline-item relative pl-8">
-                                <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">Day 2: Friday, May 15</span>
-                                <h4 class="text-xl font-bold text-slate-800 mt-3">Urban Pulse: Shibuya & Harajuku</h4>
-                                <p class="text-sm text-slate-500 mt-2 leading-relaxed">Coffee at Onibus Shibuya. Witness the world's busiest crossing. Afternoon exploration of Ura-Harajuku's artisan boutiques and cafes.</p>
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-red-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Afternoon Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Initial base camp established in Shinjuku. Check-in to hotel and drop off gear. Quick exploration of the immediate vicinity.</p>
                             </div>
-                            <!-- Day 3 -->
-                            <div class="timeline-item relative pl-8">
-                                <span class="text-[10px] font-black text-amber-500 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-full">Day 3: Saturday, May 16</span>
-                                <h4 class="text-xl font-bold text-slate-800 mt-3">Digital Zen & Akihabara Exploration</h4>
-                                <p class="text-sm text-slate-500 mt-2 leading-relaxed">Morning session at TeamLab Borderless. Transition to Akihabara for a deep-dive into the archives of tech and gaming culture.</p>
-                            </div>
-                            <!-- Day 4 -->
-                            <div class="timeline-item relative pl-8">
-                                <span class="text-[10px] font-black text-purple-500 uppercase tracking-widest bg-purple-50 px-3 py-1 rounded-full">Day 4: Sunday, May 17</span>
-                                <h4 class="text-xl font-bold text-slate-800 mt-3">Mission Debrief & Departure</h4>
-                                <p class="text-sm text-slate-500 mt-2 leading-relaxed">Leisurely breakfast in Asakusa. Final souvenir run at Nakamise-dori before boarding the express back to Narita for the return leg.</p>
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-red-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Evening Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Official birthday mission at a hidden Omakase spot. Post-dinner drinks and neon-lit atmosphere at Omoide Yokocho.</p>
                             </div>
                         </div>
-                        <button class="w-full mt-10 py-5 border-2 border-dashed border-slate-200 rounded-2xl text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 hover:border-red-500 transition-all flex items-center justify-center gap-2">
-                            <span>+</span> Modify Mission Phases
-                        </button>
                     </div>
+
+                    <div id="day-content-2" class="sp-card p-10 bg-white fade-in hidden-stage">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">Urban Pulse • May 15 (Fri)</span>
+                        </div>
+                        <h4 class="text-2xl font-black text-slate-800">Shibuya Scramble & Harajuku Backstreets</h4>
+                        <div class="mt-6 space-y-6">
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-blue-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Morning Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Early morning fuel at Onibus Shibuya. Head to Shibuya Sky for the best panoramic views of the city before the crowds.</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-blue-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Afternoon Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Tactical exploration of Ura-Harajuku. Focus on artisan boutiques, vintage shopping, and the unique architecture of Omotesando.</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-blue-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Night Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Izakaya crawling in the Shibuya back alleys. Experience the local Friday night energy.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="day-content-3" class="sp-card p-10 bg-white fade-in hidden-stage">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-[10px] font-black text-amber-500 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-full">Digital Zen • May 16 (Sat)</span>
+                        </div>
+                        <h4 class="text-2xl font-black text-slate-800">TeamLab Borderless & Akihabara Dive</h4>
+                        <div class="mt-6 space-y-6">
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-amber-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Morning Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Engage with immersive data visualization at TeamLab Borderless (Azabudai Hills). A sensory-overload birthday experience.</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-amber-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Afternoon Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Strategic transition to Akihabara. Deep-dive into retro gaming archives, electronic hardware history, and high-tech hobbyist stores.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="day-content-4" class="sp-card p-10 bg-white fade-in hidden-stage">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="text-[10px] font-black text-purple-500 uppercase tracking-widest bg-purple-50 px-3 py-1 rounded-full">Departure • May 17 (Sun)</span>
+                        </div>
+                        <h4 class="text-2xl font-black text-slate-800">Asakusa Culture & Final Logistics</h4>
+                        <div class="mt-6 space-y-6">
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-purple-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Morning Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Leisurely morning at Senso-ji Temple, Asakusa. Final tactical acquisition (souvenirs) along the historic Nakamise-dori street.</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border-l-4 border-purple-500">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Afternoon Objective</p>
+                                <p class="text-sm text-slate-700 leading-relaxed">Mission debrief lunch. Final walk along the Sumida River before boarding the Narita Express for the return leg.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full mt-8 py-5 border-2 border-dashed border-slate-200 rounded-2xl text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-red-500 hover:border-red-500 transition-all flex items-center justify-center gap-2">
+                        <span>+</span> Propose Phase Update
+                    </button>
                 </div>
 
                 <!-- Planning Sidebar -->
                 <div class="lg:col-span-4 space-y-6">
                     <div class="sp-card p-6 bg-slate-900 text-white border-none">
                         <p class="text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Planning Assistant</p>
-                        <p class="text-xs leading-relaxed opacity-80 mb-6">"Manage your travel essentials and logistical checkpoints below."</p>
+                        <p class="text-xs leading-relaxed opacity-80 mb-6 italic">"Synchronize your travel tools and checkpoints before deployment."</p>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-                                <span class="text-[10px] font-bold">Passport Check</span>
-                                <span class="text-green-400 text-[10px] font-black">VALID</span>
+                                <span class="text-[10px] font-bold">Passport Scan</span>
+                                <span class="text-green-400 text-[10px] font-black">VALIDATED</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-                                <span class="text-[10px] font-bold text-slate-300">Travel Insurance</span>
+                                <span class="text-[10px] font-bold">Travel Insurance</span>
                                 <span class="text-green-400 text-[10px] font-black">ACTIVE</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 opacity-50">
-                                <span class="text-[10px] font-bold text-slate-300">JR Pass QR</span>
+                                <span class="text-[10px] font-bold text-slate-300">Suica / JR Pass</span>
                                 <span class="text-slate-500 text-[10px] font-black">PENDING</span>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="sp-card p-6 border-none bg-blue-50">
+                        <h4 class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-3">Currency Sync</h4>
+                        <div class="flex justify-between items-end">
+                            <span class="text-sm font-bold text-slate-700">1 SGD</span>
+                            <span class="text-sm font-bold text-slate-700">≈ 112 JPY</span>
+                        </div>
+                        <div class="h-1 w-full bg-white rounded-full mt-2 overflow-hidden">
+                            <div class="h-full bg-blue-400 w-3/4"></div>
                         </div>
                     </div>
                 </div>
@@ -364,7 +432,7 @@
 
     <footer class="py-20 text-center">
         <div class="text-[10px] font-black text-slate-300 uppercase tracking-[0.5em] mb-2">Singpass Birthday Protocol v2026</div>
-        <p class="text-[10px] text-slate-400">© 2026 Celebration Agency. Confidential for Rayner Ler.</p>
+        <p class="text-[10px] text-slate-400">© 2026 Birthday Celebration for Rayner Ler</p>
     </footer>
 
     <script>
@@ -378,22 +446,39 @@
             if (viewName === 'dashboard') {
                 dashboard.classList.remove('hidden-stage');
                 itinerary.classList.add('hidden-stage');
-                navDash.classList.add('active', 'text-red-500');
+                navDash.classList.add('active');
                 navDash.classList.remove('text-slate-400');
-                navItin.classList.remove('active', 'text-red-500');
+                navItin.classList.remove('active');
                 navItin.classList.add('text-slate-400');
             } else {
                 dashboard.classList.add('hidden-stage');
                 itinerary.classList.remove('hidden-stage');
-                navItin.classList.add('active', 'text-red-500');
+                navItin.classList.add('active');
                 navItin.classList.remove('text-slate-400');
-                navDash.classList.remove('active', 'text-red-500');
+                navDash.classList.remove('active');
                 navDash.classList.add('text-slate-400');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Countdown Logic (Updated with Seconds)
+        // DAY SWITCHER
+        function switchDay(dayNum) {
+            // Hide all day content
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`day-content-${i}`).classList.add('hidden-stage');
+                const tab = document.getElementById(`day-tab-${i}`);
+                tab.classList.remove('active', 'bg-[#ff4757]', 'text-white');
+                tab.classList.add('bg-white', 'text-slate-400');
+            }
+            
+            // Show selected day content
+            document.getElementById(`day-content-${dayNum}`).classList.remove('hidden-stage');
+            const activeTab = document.getElementById(`day-tab-${dayNum}`);
+            activeTab.classList.add('active');
+            activeTab.classList.remove('bg-white', 'text-slate-400');
+        }
+
+        // Countdown Logic (Updated with High Precision Seconds)
         const targetDate = new Date('May 14, 2026 00:00:00').getTime();
         
         function updateCountdown() {
@@ -401,7 +486,6 @@
             const diff = targetDate - now;
             
             if (diff <= 0) {
-                // If the date has passed
                 document.getElementById('cd-days').innerText = "00";
                 document.getElementById('cd-hours').innerText = "00";
                 document.getElementById('cd-mins').innerText = "00";
